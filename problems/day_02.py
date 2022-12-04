@@ -1,5 +1,5 @@
 INPUT_PREFIX = "c:/Users/ctyna/code/advent_of_code_2022/problems/inputs"
-input_path = f"{INPUT_PREFIX}/day_02_easy.txt"
+input_path = f"{INPUT_PREFIX}/day_02.txt"
 f_in = open(input_path)
 
 def outcome_score(op, you):

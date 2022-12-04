@@ -1,6 +1,6 @@
 import os
 INPUT_PREFIX = "c:/Users/ctyna/code/advent_of_code_2022/problems/inputs"
-input_path = f"{INPUT_PREFIX}/day_01_easy.txt"
+input_path = f"{INPUT_PREFIX}/day_01.txt"
 f_in = open(input_path)
 
 ### PART ONE
