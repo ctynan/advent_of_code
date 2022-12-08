@@ -1,4 +1,4 @@
-INPUT_PREFIX = "c:/Users/ctyna/code/advent_of_code_2022/problems/inputs"
+INPUT_PREFIX = "c:/Users/ctyna/code/advent_of_code_2022/2022/inputs"
 input_path = f"{INPUT_PREFIX}/day_08.txt"
 
 f_in = open(input_path)
