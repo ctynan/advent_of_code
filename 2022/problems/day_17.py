@@ -115,7 +115,23 @@ div = NUM % 5*M
 mult = (NUM - div) // 5*M
 import time
 ts = time.monotonic()
-while blocks_fallen < 100*M:
+
+TOP_ROWS_HASH = [] ### for cycle checking
+from collections import Counter
+def generate_top_rows_hash(num_rows, jet_mod, block_mod):
+    global FIXED_POINTS
+    top_point = max([y for x, y in FIXED_POINTS])
+    hash_value = 0
+    for j in range(num_rows):
+        for x in range(7):
+            exponent = 2**(7*j + x)
+            if (x, top_point-j) in FIXED_POINTS:
+                hash_value += exponent
+    hash_value += 2**(7*num_rows)*(5*jet_mod + block_mod)
+    
+    return hash_value
+
+while blocks_fallen < 100000:
     if (blocks_fallen+1) % 1000 == 0:
         print("Blocks fallen: ", blocks_fallen+1, time.monotonic()-ts) 
     cur_block_X = copy.deepcopy(BLOCKS_X[blocks_fallen % 5])
@@ -152,22 +168,31 @@ while blocks_fallen < 100*M:
                 break
         if collision_flag:
             for idx, y in enumerate(cur_block_Y):
-                # HIGH_BLOCK[cur_block_X[idx]] = max(HIGH_BLOCK[cur_block_X[idx]], y)
                 FIXED_POINTS.add((cur_block_X[idx], y))
             blocks_fallen += 1
-            if blocks_fallen % 1000 == 0:
-                FIXED_POINTS = update_points(FIXED_POINTS)
+            # if blocks_fallen % 1000 == 0:
+            #     FIXED_POINTS = update_points(FIXED_POINTS)
             HIGH_BLOCKS.append(max([y for x, y in FIXED_POINTS]))
             break
+    
+    TOP_ROWS_HASH.append(generate_top_rows_hash(6, (jet_idx-1)%M, (blocks_fallen-1)%5))
+    from collections import Counter
+    c = Counter(TOP_ROWS_HASH)
+    tmp = c.most_common(1)[0]
+    if tmp[1] >= 5:
+        for hash_idx, hash_val in enumerate(TOP_ROWS_HASH):
+            if hash_val == tmp[0]:
+                ### THIS GIVES YOU THE CYCLE INFO MANUALLY INPUTTED BELOW
+                print(hash_idx, HIGH_BLOCKS[hash_idx])
+        break
 
-"""
-### if line found & 
 
-
-NUM TOP ROW STATES: 2^7
-NUM POSS FOR NEXT PIECE: 5
-NUM POSS FOR JET STREAM BEFORE HIT TOP ROW: 2^4  
-
-
-"""
-
+y = NUM - 178
+CYCLE_LENGTH = 1908 - 178
+y_mod = y % CYCLE_LENGTH
+tot = 282
+tot += (2941-282) * ((y - y_mod) // CYCLE_LENGTH)
+tot += HIGH_BLOCKS[178 + y_mod] - HIGH_BLOCKS[178]
+print(tot)
+### let y =
+### 31 + (1000000000000 - 17 )
