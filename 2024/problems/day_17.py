@@ -75,7 +75,6 @@ while len(q) > 0:
     for i in range(0,8):
         new_A = scaler * cur_A + i 
         output_value = get_outputs(new_A, program)
-        print(cur_A, new_A, output_value, program_entries[-len(output_value):])
         if output_value == program_entries[-len(output_value):]:
             q.append(new_A)
             if output_value == program_entries:
