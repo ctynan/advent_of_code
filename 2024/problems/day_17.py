@@ -84,8 +84,3 @@ while len(q) > 0:
                     best = min(new_A, best)
 
 print(best)
-
-
-    
-     
-
